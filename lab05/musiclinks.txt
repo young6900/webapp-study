@@ -1,0 +1,7 @@
+lab5/musicPHP/songs/all-the-small-things.mp3
+lab5/musicPHP/songs/basket-case.mp3
+lab5/musicPHP/songs/dreams.mp3
+lab5/musicPHP/songs/just-the-way-you-are.mp3
+lab5/musicPHP/songs/lucky.mp3
+lab5/musicPHP/songs/paradise-city.mp3
+lab5/musicPHP/songs/rehab.mp3

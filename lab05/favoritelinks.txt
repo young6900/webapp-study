@@ -1,0 +1,7 @@
+"http://en.wikipedia.org/wiki/Guns_N%27_Roses"
+"http://en.wikipedia.org/wiki/Green_Day"
+"http://en.wikipedia.org/wiki/Blink-182"
+"http://en.wikipedia.org/wiki/The_Cranberries"
+"http://en.wikipedia.org/wiki/Bruno_Mars"
+"http://en.wikipedia.org/wiki/Amy_Winehouse"
+"http://en.wikipedia.org/wiki/Jason_Mraz"
