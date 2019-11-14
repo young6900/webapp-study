@@ -1,0 +1,171 @@
+--EX1
+create table student (
+  student_id integer NOT NULL,
+  name varchar(10) NOT NULL,
+  year smallint NOT NULL default "1",
+  dept_no integer NOT NULL,
+  major varchar(20),
+  PRIMARY KEY (student_id)
+);
+
+create table department (
+  dept_no integer NOT NULL PRIMARY KEY,
+  dept_name varchar(20) UNIQUE NOT NULL,
+  office varchar(20) NOT NULL,
+  office_tel varchar(13)
+);
+
+ALTER TABLE student
+ADD COLUMN gender varchar(10),
+MODIFY COLUMN major binary(30);
+
+ALTER TABLE student
+DROP COLUMN gender;
+
+--NOTHING
+ALTER TABLE student
+MODIFY COLUMN name binary(20),
+MODIFY COLUMN major binary(40);
+
+ALTER TABLE department
+MODIFY COLUMN dept_name varchar(40),
+MODIFY COLUMN office varchar(40);
+--NOTHING
+
+--EX2
+insert into student (student_id, name, year, dept_no, major)
+VALUES
+(20060001, 'Ashley Jackson', 4, 4, 'Business Administration'),
+(20030001, 'Liam Johnson', 4, 2, 'Electrical Engineering'),
+(20040003, 'Jacob Lee', 3, 2, 'Electrical Engineering'),
+(20060002, 'Noah Kim', 3, 1, 'Computer Science'),
+(20100002, 'Ava Lim', 3, 4, 'Business Administration'),
+(20110001, 'Emma Watson', 2, 1, 'Computer Science'),
+(20080003, 'Lisa Maria', 4, 3, 'Law'),
+(20040002, 'Jacob William', 4, 5, 'Law'),
+(20070001, 'Emily Rose', 4, 4, 'Business Administration'),
+(20100001, 'Ethan Hunt', 3, 4, 'Business Administration'),
+(20110002, 'Jason Mraz', 2, 1, 'Electrical Engineering'),
+(20030002, 'John Smith', 5, 1, 'Computer Science'),
+(20070003, 'Sophia Park', 4, 3, 'Law'),
+(20070007, 'James Michael', 2, 4, 'Business Administration'),
+(20100003, 'James Bond', 3, 1, 'Computer Science'),
+(20070005, 'Olivia Madison', 2, 5, 'English Language and Literature');
+
+insert into department
+VALUES (1, 'Computer Science', 'Science Building 101', '02-3290-0123'),
+(2, 'Electrical Engineering', 'Engineering Building 401', '02-3290-2345'),
+(3, 'Law', 'Law Building 201', '02-3290-7896'),
+(4, 'Business Administration', 'Business Building 104', '02-3290-1112'),
+(5, 'English Language and Literature', 'Language Building 303', '02-3290-4412');
+
+--EX3
+UPDATE department
+SET dept_name = "Electrical and Electronics Engineering"
+WHERE dept_no = 2;
+
+insert into department
+values (6, 'Special Education', 'Education Building 403', '02-3290-2347');
+
+UPDATE student
+SET dept_no = 6 , major = 'Special Education'
+WHERE student_id = 20110001;
+
+DELETE FROM student
+WHERE student_id = 20110002;
+DELETE FROM student
+WHERE student_id = 20030002;
+
+--EX4
+select name from student
+where dept_no = 1;
+
+select student_id, year, major from student
+
+select name from student
+where year = 3;
+
+select name from student
+where year = 1 or year =2;
+
+select name from student
+join department on department.dept_no = student.dept_no
+where department.dept_no = 4;
+
+--EX5
+select name from student
+where student_id like "%2007%";
+
+select name from student
+order by student_id;
+
+select major from student
+group by major
+having avg(year) > 3;
+
+select name from student
+where student_id like "%2007%" and dept_no = 4
+limit 2;
+
+--EX6
+select role from roles
+join movies on roles.movie_id = movies.id
+where name = "Pi";
+
+select actors.first_name, actors.last_name, roles.role
+from actors
+join roles on roles.actor_id = actors.id
+where movie_id = 254943;
+
+select a.first_name, a.last_name
+from actors a
+join roles r1 on r1.actor_id = a.id
+join movies m1 on m1.id = r1.movie_id
+join roles r2 on r2.actor_id = a.id
+join movies m2 on m2.id = r2.movie_id
+where m1.name = "Kill Bill: Vol. 1" and m2.name = "Kill Bill: Vol. 2";
+
+select a.first_name, a.last_name
+from actors a
+join roles r on r.actor_id = a.id
+group by r.actor_id
+order by count(r.actor_id) desc
+limit 7;
+
+select g.genre
+from movies m
+join movies_genres g on g.movie_id = m.id
+group by g.genre
+order by avg(m.rank) desc
+limit 3;
+
+select d.first_name ,d.last_name
+from directors d
+join movies_directors m on m.director_id = d.id
+join movies_genres g on g.movie_id = m.movie_id
+where g.genre = "Thriller"
+group by d.id
+order by count(d.id) desc
+limit 1;
+
+--EX7
+select grade from grades
+where course_id = 10002;
+
+select s.name, g.grade
+from students s
+join grades g on s.id = g.student_id
+where g.course_id = 10002 and (g.grade = "B-" or g.grade= "B" or g.grade = "B+" or g.grade = "A+");
+
+select s.name, g.grade, c.name
+from students s
+join grades g on s.id = g.student_id
+join courses c on c.id = g.course_id
+where g.grade = "B-" or g.grade= "B" or g.grade = "B+" or g.grade = "A+";
+
+select c.name
+from courses c
+join grades g on c.id = g.course_id
+join students s on s.id = g.student_id
+group by c.id
+having count(c.name) >= 2;
